@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+</head>
+<script src="jquery-3.7.1.js"></script>
+<link rel="stylesheet" href="bootstrap.css">
+<body>
+	<div class="container-fluid mt-3">
+		<button id="btn" class = "btn btn-outline-success">get request</button>
+		<table id="ogretmenler" class="table table-striped">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>NAME</th>
+					<th class="col d-none d-sm-block col-lg-1 bg-info">IS_GICIK</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="table-primary">
+					<td>0</td>
+					<td>deneme</td>
+					<td class="col d-none d-sm-block col-lg-1 bg-info">false</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+<script>
+
+class Ogretmen
+{
+	constructor(ID, NAME, IS_GICIK)
+	{
+		this.ID = ID;
+		this.NAME = NAME;
+		this.IS_GICIK = IS_GICIK;
+	}
+}
+
+	$("#btn").click(function()
+	{
+		$.get("http://localhost:8080/ogretmen/getall", function(data, status)
+		{
+			$.each(data, function (index, element)
+			{                      
+				ogretmen = new Ogretmen(element.id, element.name, element.is_GICIK);
+				var row = $('<tr>');
+	            row.append($('<td>').html(ogretmen.ID));
+	            row.append($('<td>').html(ogretmen.NAME));
+	            row.append($('<td>').html(ogretmen.IS_GICIK + ''));
+	            $('#ogretmenler').append(row);
+   			});
+		});
+	});
+</script>
+<script type="text/javascript" src="bootstrap.bundle.js"></script>
+</html>
